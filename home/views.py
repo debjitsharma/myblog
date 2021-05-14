@@ -35,7 +35,7 @@ def logoutUser(request):
     logout(request)
     return redirect('index')
 
-@login_required(login_url='login/')
+@login_required(login_url='login')
 def add_blog(request):
     if request.method=="POST":
        title=request.POST.get('title')
@@ -44,7 +44,7 @@ def add_blog(request):
        add_blog = BlogModel(title=title, content=content,image=image)
        User= request.user
        add_blog.save()
-      
+       
     return render(request,'add_blog.html')
 
 @login_required(login_url='login/')
@@ -57,48 +57,6 @@ def blog_detail(request):
         print(e)
 
     return render(request,'blog_detail.html')
-
-
-        
-
-
-        
-     
-    
-    
-
-   
-def logoutUser(request):
-    logout(request)
-    return redirect("login")
-
-def add_blog(request):
-    if request.method=="POST":
-       title=request.POST.get('title')
-       content=request.POST.get('content')
-       image= request.FILES['image']
-       add_blog = BlogModel(title=title, content=content,image=image)
-       User= request.user
-       add_blog.save()
-       return redirect('index')
-    
-
-      
-    return render(request,'add_blog.html')
-
-
-
-def blog_detail(request):
-    context = {}
-    try:
-        blog_obj= BlogModel.objects.all()
-        context['blog_obj']= blog_obj
-    except Exception as e:
-        print(e)
-
-    return render(request,'blog_detail.html')
-
-
 
 
 def register_page(request):
