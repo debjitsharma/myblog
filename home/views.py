@@ -1,14 +1,12 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, auth
 from django.contrib.auth import logout,authenticate, login
 from .form import *
 from .models import BlogModel
 from django.contrib.auth.decorators import login_required
-
-
+from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
-@login_required(login_url='login/')
 def index(request):
     context= {'blogs':BlogModel.objects.all()}
     return render(request, 'index.html',context)
@@ -35,7 +33,7 @@ def loginUser(request):
 
 def logoutUser(request):
     logout(request)
-    return redirect("login")
+    return redirect('index')
 
 @login_required(login_url='login/')
 def add_blog(request):
@@ -99,3 +97,16 @@ def blog_detail(request):
         print(e)
 
     return render(request,'blog_detail.html')
+
+
+
+
+def register_page(request):
+    form = CreateUserForm()
+
+    if request.method == 'POST':
+        form =CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+    context={'form': form}
+    return render(request, 'register_page.html',context)
