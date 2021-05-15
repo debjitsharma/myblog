@@ -3,8 +3,9 @@ from django.contrib.auth.models import User, auth
 from django.contrib.auth import logout,authenticate, login
 from .form import *
 from .models import BlogModel
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
+
 # Create your views here.
 
 def index(request):
@@ -26,6 +27,8 @@ def loginUser(request):
              print (user)
              return redirect('index')
           else:
+               messages.info(request,'Username or Password is incorrect ')
+
                return render(request,'login.html')
         
     return render(request,'login.html')
@@ -44,6 +47,8 @@ def add_blog(request):
        add_blog = BlogModel(title=title, content=content,image=image)
        User= request.user
        add_blog.save()
+       return redirect('index')
+        
        
     return render(request,'add_blog.html')
 
@@ -60,11 +65,24 @@ def blog_detail(request):
 
 
 def register_page(request):
-    form = CreateUserForm()
+    if request.method=='POST':
+         username = request.POST['username']
+         password1 = request.POST['password1']
+         password2 = request.POST['password2']
+         email=request.POST['email']
+        
+         if password1==password2:
+             if User.objects.filter(username=username).exists():
+                messages.info(request,'Username already taken')
+             elif User.objects.filter(email=email).exists():
+                 messages.info(request,'Email already taken')
+             else:    
 
-    if request.method == 'POST':
-        form =CreateUserForm(request.POST)
-        if form.is_valid():
-            form.save()
-    context={'form': form}
-    return render(request, 'register_page.html',context)
+                 user=User.objects.create_user(username=username,password=password1,email=email)
+                 user.save()
+                 print('user created')
+                 return redirect('login')
+         else:
+             messages.info(request,'Password not matching ')
+
+    return render(request, 'register_page.html')

@@ -104,12 +104,20 @@
 				 				<input class="btn login_btn" type="submit" value="Login">
 				   			</div>
 						
-					</form>
+					</form></div>
 
-				</div>
+					{% if messages %}
+<ul>
+   {% for message in messages %}
+	   <li><span class="badge rounded-pill bg-danger  even-larger-badge  my-3 ms-2 " style="font-size: 1em">{{message}}</span></li>
+   {% endfor %}
+</ul>
+{% endif %}
+
+				
 		
 				
-				</div>
+				
 			</div>
 		</div>
 	</div>
