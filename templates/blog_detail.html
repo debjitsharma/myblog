@@ -2,5 +2,14 @@
 {% block body %}
 
 
+<div class="container-fluid my-4">
+<div class="card mb-3">
+  <img src="/media/{{post.image}}" class="card-img-top" alt="..." style="height:500px">
+  <div class="card-body">
+    <h5 class="card-title">{{post.title}}</h5>
+    <p class="card-text">{{post.content}}</p>
+   
+  </div>
+</div></div>
 
 {% endblock body %}

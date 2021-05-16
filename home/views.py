@@ -53,15 +53,10 @@ def add_blog(request):
     return render(request,'add_blog.html')
 
 @login_required(login_url='login/')
-def blog_detail(request):
-    context = {}
-    try:
-        blog_obj= BlogModel.objects.all()
-        context['blog_obj']= blog_obj
-    except Exception as e:
-        print(e)
+def blog_detail(request,m_id):
+   post=BlogModel.objects.get(pk=m_id)
+   return render(request,'blog_detail.html',{'post':post})
 
-    return render(request,'blog_detail.html')
 
 
 def register_page(request):
