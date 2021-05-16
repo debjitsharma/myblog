@@ -36,12 +36,12 @@
     <div class="col-lg-8 ">
       <div class="card-body">
         <h5 class="card-title">{{blog.title}}</h5>
-        <p class="card-text">{{blog.content}}</p> {%if user.is_authenticated%}
+        <p class="card-text">{{blog.content}}</p> 
       <form action="{%url 'blog_detail' m_id=blog.id%}" method="post">
       {% csrf_token %}
       <button type="submit" name="read" class="btn btn-primary mb-3">Continue Reading</button>
       </form>
-       {%endif%}
+      
         
       </div>
     </div>

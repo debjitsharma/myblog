@@ -52,7 +52,7 @@ def add_blog(request):
        
     return render(request,'add_blog.html')
 
-@login_required(login_url='login/')
+@login_required(login_url='login')
 def blog_detail(request,m_id):
    post=BlogModel.objects.get(pk=m_id)
    return render(request,'blog_detail.html',{'post':post})
